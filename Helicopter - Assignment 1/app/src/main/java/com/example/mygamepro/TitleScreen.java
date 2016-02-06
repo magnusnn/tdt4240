@@ -6,8 +6,13 @@ package com.example.mygamepro;
 
         import android.app.Activity;
         import android.app.ActionBar;
+        import android.graphics.Canvas;
         import android.graphics.Color;
+        import android.graphics.Paint;
+        import android.graphics.Rect;
         import android.util.DisplayMetrics;
+
+        import android.view.Window;
         import android.widget.Toolbar;
 
         import sheep.game.Sprite;
@@ -30,10 +35,12 @@ public class TitleScreen extends State {
     private Sprite backSprite2;
     private Sprite backSprite3;
     private Sprite heliSprite;
+    private Canvas rect;
     private DisplayMetrics metrics = new DisplayMetrics();
     private int screenWidth = 0;
     private int screenHeight = 0;
     private int bug = 0;
+    private int TitleBarHeight;
 //    private Wall wall;
 
 
@@ -42,6 +49,8 @@ public class TitleScreen extends State {
         activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
         this.screenHeight = metrics.heightPixels;
         this.screenWidth = metrics.widthPixels;
+
+
         System.out.println("HOYDE:" + screenHeight);
         System.out.println("BREDDE:" + screenWidth);
         backSprite1 = new Sprite(backgroundImage);
@@ -66,11 +75,32 @@ public class TitleScreen extends State {
         heliSprite.setSpeed(-40, 0);
 
 
+        Rect rectgle= new Rect();
+        Window window = activity.getWindow();
+        window.getDecorView().getWindowVisibleDisplayFrame(rectgle);
+        int StatusBarHeight= rectgle.top;
+        int contentViewTop=
+                window.findViewById(Window.ID_ANDROID_CONTENT).getTop();
+        TitleBarHeight= contentViewTop - StatusBarHeight;
+
+
+
     }
 
     public void draw(android.graphics.Canvas canvas){
+
+
+
+
         canvas.drawColor(Color.rgb(254, 0, 254));
         backSprite1.draw(canvas);
+        Paint myPaint = new Paint();
+
+        myPaint.setColor(Color.rgb(0, 0, 0));
+        myPaint.setStyle(Paint.Style.STROKE);
+        Sprite sprite = new Sprite();
+//        rect = canvas.drawRect(3, 3, screenWidth - 5, canvas.getHeight() - 5, myPaint);
+        Rect rectangle = new Rect();
 
 //        topWall.draw(canvas);
 //        bottomWall.draw(canvas);
