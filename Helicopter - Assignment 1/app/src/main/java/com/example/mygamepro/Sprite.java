@@ -32,6 +32,8 @@ public class Sprite {
     private int ySpeed = 5;
     private Rect src;
     private Rect dst;
+    private boolean directionLeft = true;
+    private boolean directionDown = true;
 
     public Sprite(GameView gameView, Bitmap bmp){
         this.width = bmp.getWidth() / BMP_COLUMNS;
@@ -73,5 +75,63 @@ public class Sprite {
         Bitmap turnMap = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), mirrorMatrix, false);
         turnMap.setDensity(DisplayMetrics.DENSITY_DEFAULT);
         bmp = new BitmapDrawable(turnMap).getBitmap();
+        System.out.println(directionLeft);
+        if (directionLeft == false){
+            directionLeft = true;
+        }
+        else{
+            directionLeft = false;
+        }
+        System.out.println(directionLeft);
+        System.out.println("-----------------------");
     }
+
+
+    public int getX(){
+        return this.x;
+    }
+    public int getY(){
+        return this.y;
+    }
+    public int getxSpeed(){
+        return this.xSpeed;
+    }
+    public int getySpeed(){
+        return this.ySpeed;
+    }
+
+    public void setxSpeed(int xSpeed){
+        this.xSpeed = xSpeed;
+    }
+    public void setySpeed(int ySpeed) {
+        this.ySpeed = ySpeed;
+    }
+
+    public void setDirection(int xPosition, int yPosition){
+        int ratio = 1;
+        if (getX() > xPosition && !directionLeft){
+            flipHelicopter();
+//            ratio = getRatio()
+            setxSpeed(-getxSpeed());
+        }
+        if (getY() > yPosition && directionDown) {
+            setySpeed(-getySpeed());
+            directionDown = false;
+        }
+
+        if ((getX() <= xPosition) && (directionLeft)){
+            setxSpeed(-getxSpeed());
+            flipHelicopter();
+        }
+        if (getY() <= yPosition&& !directionDown){
+            setySpeed(-getySpeed());
+            directionDown = true;
+        }
+    }
+
+//
+//    public int getRatio(int getXY, int xyPosition){
+//
+//    }
+
 }

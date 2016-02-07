@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.net.wifi.p2p.WifiP2pManager;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -65,6 +67,16 @@ public class GameView extends SurfaceView {
     protected void onDraw (Canvas canvas){
         canvas.drawColor(Color.WHITE);
         sprite.onDraw(canvas);
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        // TODO Auto-generated method stub
+        System.out.println("X: " + event.getX());
+        System.out.println("Y: " + event.getY());
+        sprite.setDirection((int)event.getX(),(int)event.getY());
+        return super.onTouchEvent(event);
     }
 
 }
