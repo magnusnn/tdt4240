@@ -18,8 +18,6 @@ import sheep.math.Vector2;
  * Created by Magnus on 06.02.2016.
  */
 public class Sprite {
-    // direction = 0 up, 1 left, 2 down, 3 right,
-    // animation = 3 back, 1 left, 0 front, 2 right
     private static final float BMP_ROWS = 1;
     private static final float BMP_COLUMNS = 4;
     private float x = 0;
@@ -82,9 +80,7 @@ public class Sprite {
         dst = new Rect((int)x, (int)y, (int)(x + width), (int) (y + height));
 
         canvas.drawBitmap(bmp, src, dst, null);
-        System.out.println("GAMEVIEW: " + gameView.getWidth());
 
-//        System.out.println(getX());
     }
 
 
@@ -94,18 +90,13 @@ public class Sprite {
         Bitmap turnMap = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), bmp.getHeight(), mirrorMatrix, false);
         turnMap.setDensity(DisplayMetrics.DENSITY_DEFAULT);
         bmp = new BitmapDrawable(turnMap).getBitmap();
-        System.out.println(directionLeft);
+
         if (directionLeft == false){
             directionLeft = true;
         }
         else{
             directionLeft = false;
         }
-        System.out.println(directionLeft);
-        System.out.println("-----------------------");
-        System.out.println("HEIGHT: " + gameView.getHeight());
-        System.out.println("WIDTH : " + gameView.getWidth());
-        System.out.println("-----------------------");
     }
 
 
@@ -129,9 +120,6 @@ public class Sprite {
         this.ySpeed = ySpeed;
     }
 
-//    public void setRate(float rateX, float rateY){
-//        this.
-//    }
 
     public void setDirection(float xPosition, float yPosition){
         float tempX = xPosition - getX();
@@ -139,34 +127,14 @@ public class Sprite {
         xSpeed = 0;
         ySpeed = 0;
         if (tempX != 0) {
-//            if (tempX > gameView.getWidth()/2 || tempX < -gameView.getWidth()/2){
-//                setxSpeed(tempX / 100);
-//            } else if (tempX <= gameView.getWidth()/2 || tempX >=-gameView.getWidth()/2 ){
-//                setxSpeed(tempX / 10);
-//            }
             setxSpeed(tempX / 100);
         }
         if (tempY != 0) {
-//            if (tempY > gameView.getHeight()/2 || tempY < -gameView.getHeight()/2){
-//                setySpeed(tempY / 100);
-//            } else if (tempY <= gameView.getHeight()/2 || tempY >=-gameView.getHeight()/2 ){
-//                setySpeed(tempY / 10);
-//            }
             setySpeed(tempY / 100);
         }
-        System.out.println("tempX: " + tempX);
-        System.out.println("tempY: " + tempY);
 
-        int ratio = 1;
-//        System.out.println(getX());
-//        System.out.println(getAnimationRow());
         if (getX() + width/2 > xPosition && !directionLeft){
             flipHelicopter();
-//            ratio = getRatio(get)
-//            setxSpeed(-getxSpeed());
-//            setxSpeed(-getxSpeed());
-
-//            setySpeed(3/4*getySpeed());
         }
         if (getY() > yPosition && directionDown) {
 //            setySpeed(-getySpeed());
@@ -184,21 +152,5 @@ public class Sprite {
         }
     }
 
-
-
-//    public void moveForward() {
-//        ySpeed += 0.01 * Math.sin(Math.toRadians(targetAngle));
-//        xSpeed += 0.01 * Math.cos(Math.toRadians(targetAngle));
-//        double currentSpeed = Math.sqrt(xTempSpeed * xTempSpeed + yTempSpeed * yTempSpeed);
-//        if (currentSpeed > maxSpeed) {
-//            //the resulting speed is allways <= maxspeed (normed to that)
-//            ySpeed *= maxSpeed/currentSpeed;
-//            xSpeed *= maxSpeed/currentSpeed;
-//        }
-
-//
-//    public int getRatio(int getXY, int xyPosition){
-//
-//    }
 
 }

@@ -1,7 +1,6 @@
 package com.example.pong;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import sheep.game.Game;

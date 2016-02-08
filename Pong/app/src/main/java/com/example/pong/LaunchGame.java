@@ -26,7 +26,8 @@ public class LaunchGame extends State implements TouchListener{
     @Override
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.WHITE);
-        canvas.drawText("Tap to start", canvas.getWidth()/2, 200, font);
+        canvas.drawText("Første mann til to poeng!!", canvas.getWidth()/2, canvas.getHeight()/2, font);
+        canvas.drawText("Trykk for å starte spillet!", canvas.getWidth()/2, canvas.getHeight()/2, font);
 
     }
 

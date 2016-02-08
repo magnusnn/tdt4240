@@ -6,6 +6,9 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.MotionEvent;
+
+import java.util.Random;
+
 import sheep.game.Sprite;
 import sheep.game.State;
 import sheep.graphics.Font;
@@ -20,28 +23,31 @@ public class GameState extends State implements TouchListener{
 
     private int canvasHeight, canvasWidth;
     private Sprite paddle1, paddle2, ball;
-    private Image paddleImage1, paddleImage2, ballImage;
+    private Image paddleSprite1, paddleSprite2, ballImage;
     private int paddle1count, paddle2count;
     private Font font;
+    private Random random, random2;
 
     public GameState() {
+        this.random = new Random();
+        this.random2 = new Random();
 
-        font = new Font(0, 55, 20, 50, Typeface.SERIF, Typeface.NORMAL);
+        this.font = new Font(255, 255, 20, 50, Typeface.SERIF, Typeface.NORMAL);
 
-        paddle1count = 0;
-        paddle2count = 0;
-        paddleImage1 = new Image(R.drawable.pongpaddle_white );
-        paddleImage2 = new Image(R.drawable.pongpaddle_white);
-        ballImage = new Image(R.drawable.ball_white);
+        this.paddle1count = 0;
+        this.paddle2count = 0;
+        this.paddleSprite1 = new Image(R.drawable.paddle );
+        this.paddleSprite2 = new Image(R.drawable.paddle);
+        this.ballImage = new Image(R.drawable.ball);
 
-        paddle1 = new Sprite(paddleImage1);
-        paddle2 = new Sprite(paddleImage2);
-        ball = new Sprite(ballImage);
+        this.paddle1 = new Sprite(paddleSprite1);
+        this.paddle2 = new Sprite(paddleSprite2);
+        this.ball = new Sprite(ballImage);
 
-        ball.setPosition(250, 200);
-        paddle1.setPosition(200, 80);
-        paddle2.setPosition(200, 610);
-        ball.setSpeed(250, 170);
+        this.ball.setPosition(450, 500);
+        this.paddle1.setPosition(200, 80);
+        this.paddle2.setPosition(200, 1010);
+        this.ball.setSpeed(300, 270);
     }
 
 
@@ -69,8 +75,27 @@ public class GameState extends State implements TouchListener{
         paddle1.update(dt);
         paddle2.update(dt);
 
-        //Sjekke om vinner
+        checkWinner();
+        checkWall();
+        checkPaddle();
+        checkGoal();
+    }
 
+    @Override
+    public void draw(Canvas canvas) {
+        canvasHeight = canvas.getHeight();
+        canvasWidth = canvas.getWidth();
+        canvas.drawColor(Color.DKGRAY);
+
+        drawScore(canvas);
+
+        ball.draw(canvas);
+        paddle1.draw(canvas);
+        paddle2.draw(canvas);
+
+    }
+
+    public void checkWinner() {
         if(paddle1count==2){
             getGame().popState();
             getGame().pushState(new GameOver(1));
@@ -79,9 +104,9 @@ public class GameState extends State implements TouchListener{
             getGame().popState();
             getGame().pushState(new GameOver(2));
         }
+    }
 
-        //Sjekke veggkollisjon
-
+    public void checkWall(){
         if(ball.getX()>(canvasWidth-ballImage.getWidth()) || ball.getX()<0)
         {
             ball.setSpeed(-ball.getSpeed().getX(), ball.getSpeed().getY());
@@ -91,48 +116,33 @@ public class GameState extends State implements TouchListener{
         {
             ball.setSpeed(ball.getSpeed().getX(), -ball.getSpeed().getY());
         }
+    }
 
-        //Sjekke kollisjon med paddelen
-
+    public void checkPaddle(){
         if(ball.collides(paddle1)){
             ball.setSpeed(ball.getSpeed().getX(), -ball.getSpeed().getY());
         }
         if(ball.collides(paddle2)){
             ball.setSpeed(ball.getSpeed().getX(), -ball.getSpeed().getY());
         }
+    }
 
-
-        //Se om ballen kommer bak paddelen
-
+    public void checkGoal(){
         if(ball.getY()<paddle1.getY()){
             ball.setPosition(canvasHeight/2, canvasWidth/2);
             paddle1count++;
-            Log.w("GameState", "One point for paddle2: " + paddle2count);
         }
         if(ball.getY()>paddle2.getY()){
             ball.setPosition(canvasHeight/2, canvasWidth/2);
             paddle2count++;
-            Log.w("GameState", "One point for paddle1: " + paddle1count);
         }
-
-
-
     }
 
-    @Override
-    public void draw(Canvas canvas) {
-        canvasHeight = canvas.getHeight();
-        canvasWidth = canvas.getWidth();
-        canvas.drawColor(Color.BLUE);
 
-        canvas.drawText("" + paddle2count, 40, 310, font);
-        canvas.drawText("" + paddle1count, 390, 400, font);
-        canvas.drawRect(0, 338, 480, 342, sheep.graphics.Color.BLACK);
-
-        ball.draw(canvas);
-        paddle1.draw(canvas);
-        paddle2.draw(canvas);
-
+    public void drawScore(Canvas canvas){
+        canvas.drawText("" + paddle2count, 40, 480, font);
+        canvas.drawText("" + paddle1count, 40, 560, font);
+        canvas.drawRect(0, 505, 700, 510, sheep.graphics.Color.WHITE);
     }
 
 }

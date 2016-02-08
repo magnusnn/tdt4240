@@ -28,9 +28,9 @@ public class GameOver extends State implements TouchListener{
     @Override
     public void draw(Canvas canvas) {
         canvas.drawColor(Color.BLACK);
-        canvas.drawText("The winner is", canvas.getWidth()/2, 200, font);
-        canvas.drawText("player " + winner + "!", canvas.getWidth()/2, 300, font);
-        canvas.drawText("Tap to start a new game", canvas.getWidth()/2, 450, font2);
+        canvas.drawText("Vinneren ble", canvas.getWidth()/2, 200, font);
+        canvas.drawText("spiller " + winner + "!", canvas.getWidth()/2, 300, font);
+        canvas.drawText("Trykk for å begynne nytt spill!", canvas.getWidth()/2, 450, font2);
     }
 
     @Override

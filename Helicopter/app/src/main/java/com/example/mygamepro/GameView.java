@@ -5,11 +5,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+
+import sheep.graphics.Font;
 
 
 /**
@@ -41,15 +44,12 @@ public class GameView extends SurfaceView {
                     } catch (InterruptedException e){
                         System.out.println("GameView error: " + e.toString());
                     }
-
                 }
             }
 
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-//                Canvas c = holder.lockCanvas(null);
-//                onDraw(c);
-//                holder.unlockCanvasAndPost(c);
+
                 gameLoopThread.setRunning(true);
                 gameLoopThread.start();
             }
@@ -67,6 +67,10 @@ public class GameView extends SurfaceView {
     protected void onDraw (Canvas canvas){
         canvas.drawColor(Color.WHITE);
         sprite.onDraw(canvas);
+        Font font = new Font(0, 55, 20, 30, Typeface.SERIF, Typeface.NORMAL);
+        canvas.drawText("Helikopter er på følgende koordinater:" , 30, 30, font);
+        canvas.drawText("x: " + sprite.getX() , 30, 60, font);
+        canvas.drawText("y: " + sprite.getY() , 30, 90, font);
     }
 
 
