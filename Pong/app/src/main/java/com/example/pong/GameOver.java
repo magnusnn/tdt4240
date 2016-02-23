@@ -27,7 +27,7 @@ public class GameOver extends State implements TouchListener{
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawColor(Color.BLACK);
+        canvas.drawColor(Color.WHITE);
         canvas.drawText("Vinneren ble", canvas.getWidth()/2, 200, font);
         canvas.drawText("spiller " + winner + "!", canvas.getWidth()/2, 300, font);
         canvas.drawText("Trykk for å begynne nytt spill!", canvas.getWidth()/2, 450, font2);
@@ -35,9 +35,8 @@ public class GameOver extends State implements TouchListener{
 
     @Override
     public boolean onTouchUp(MotionEvent event) {
-
         getGame().popState();
-        getGame().pushState(new GameState());
+        getGame().pushState(GameStateImproved.getInstance());
         return true;
     }
 
